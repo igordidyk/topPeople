@@ -95,7 +95,7 @@ public class CoordinatorController {
         employee.setGender(gender);
         employee.setNationality(nationality);
         employee.setBorn(born);
-        employee.setBirthPlace(birthPlace);
+//        employee.setBirthPlace(birthPlace);
 
         employee.setAddress(address);
 
@@ -224,7 +224,7 @@ public class CoordinatorController {
         employee.setGender(gender);
         employee.setNationality(nationality);
         employee.setBorn(born);
-        employee.setBirthPlace(birthPlace);
+//        employee.setBirthPlace(birthPlace);
 
         employee.setAddress(address);
 

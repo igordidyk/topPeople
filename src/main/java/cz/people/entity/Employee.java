@@ -15,10 +15,6 @@ public class Employee {
     private String gender;
     private String nationality;
     private String born;
-    private String birthPlace;
-
-
-
 
     private String passportNumber;
     private String passportValidUntil;
@@ -60,6 +56,9 @@ public class Employee {
 
     @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Address address;
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    private BirthPlace birthPlace;
 
     @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
     private Coordinator coordinator;
@@ -126,13 +125,6 @@ public class Employee {
         this.born = born;
     }
 
-    public String getBirthPlace() {
-        return birthPlace;
-    }
-
-    public void setBirthPlace(String birthPlace) {
-        this.birthPlace = birthPlace;
-    }
 
 
     public String getPassportValidUntil() {
@@ -433,7 +425,6 @@ public class Employee {
                 ", gender='" + gender + '\'' +
                 ", nationality='" + nationality + '\'' +
                 ", born='" + born + '\'' +
-                ", birthPlace='" + birthPlace + '\'' +
                 ", passportNumber='" + passportNumber + '\'' +
                 ", passportValidUntil='" + passportValidUntil + '\'' +
                 ", issuedByAuthority='" + issuedByAuthority + '\'' +
