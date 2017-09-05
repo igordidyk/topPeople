@@ -112,8 +112,8 @@ public class CoordinatorController {
 //        languageList.add(language);
 //        employee.setLanguage(languageList);
 
-        employee.setCz_isco(cz_isco);
-        employee.setPosition(position);
+//        employee.setCz_isco(cz_isco);
+//        employee.setPosition(position);
         employee.setNumberOfVacancy(numberOfVacancy);
         employee.setPhase(phase);
         employee.setStatus(status);
@@ -241,8 +241,8 @@ public class CoordinatorController {
 //        languageList.add(language);
 //        employee.setLanguage(languageList);
 
-        employee.setCz_isco(cz_isco);
-        employee.setPosition(position);
+//        employee.setCz_isco(cz_isco);
+//        employee.setPosition(position);
         employee.setNumberOfVacancy(numberOfVacancy);
         employee.setPhase(phase);
         employee.setStatus(status);

@@ -1,9 +1,6 @@
 package cz.people.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class CZ_ISCO {
@@ -19,5 +16,8 @@ public class CZ_ISCO {
     private String numberOfVacancy;
     private String CZ_text;
 
+
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "cz_isco")
+    private Employee employee;
 
 }

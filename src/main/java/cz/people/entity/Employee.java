@@ -22,8 +22,8 @@ public class Employee {
     private String telephone;
     private String email;
 
-    private String cz_isco;
-    private String position;
+    //    private String cz_isco;
+//    private String position;
     private String numberOfVacancy;
     private int phase;
     private int status;
@@ -51,31 +51,38 @@ public class Employee {
     private String receivingEmploymentCard;
     private String comments;
 
+    private String marriedStatus;
+    private String currentOccupation;
 
 
-
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Address address;
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private BirthPlace birthPlace;
 
-    @ManyToOne(cascade = CascadeType.MERGE,fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private CZ_ISCO cz_isco;
+
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Coordinator coordinator;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Project project;
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "employee")
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Group group;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
     private List<Education> educations = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "employee")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
     private List<Language> languages = new ArrayList<>();
+
 
     public Employee() {
     }
-
-
 
     public int getId() {
         return id;
@@ -125,7 +132,13 @@ public class Employee {
         this.born = born;
     }
 
+    public String getPassportNumber() {
+        return passportNumber;
+    }
 
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
 
     public String getPassportValidUntil() {
         return passportValidUntil;
@@ -157,22 +170,6 @@ public class Employee {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getCz_isco() {
-        return cz_isco;
-    }
-
-    public void setCz_isco(String cz_isco) {
-        this.cz_isco = cz_isco;
-    }
-
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
     }
 
     public String getNumberOfVacancy() {
@@ -383,12 +380,36 @@ public class Employee {
         this.comments = comments;
     }
 
+    public String getMarriedStatus() {
+        return marriedStatus;
+    }
+
+    public void setMarriedStatus(String marriedStatus) {
+        this.marriedStatus = marriedStatus;
+    }
+
+    public String getCurrentOccupation() {
+        return currentOccupation;
+    }
+
+    public void setCurrentOccupation(String currentOccupation) {
+        this.currentOccupation = currentOccupation;
+    }
+
     public Address getAddress() {
         return address;
     }
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public BirthPlace getBirthPlace() {
+        return birthPlace;
+    }
+
+    public void setBirthPlace(BirthPlace birthPlace) {
+        this.birthPlace = birthPlace;
     }
 
     public Coordinator getCoordinator() {
@@ -399,6 +420,21 @@ public class Employee {
         this.coordinator = coordinator;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
 
     public List<Education> getEducations() {
         return educations;
@@ -414,50 +450,5 @@ public class Employee {
 
     public void setLanguages(List<Language> languages) {
         this.languages = languages;
-    }
-
-    @Override
-    public String toString() {
-        return "Employee{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", gender='" + gender + '\'' +
-                ", nationality='" + nationality + '\'' +
-                ", born='" + born + '\'' +
-                ", passportNumber='" + passportNumber + '\'' +
-                ", passportValidUntil='" + passportValidUntil + '\'' +
-                ", issuedByAuthority='" + issuedByAuthority + '\'' +
-                ", telephone='" + telephone + '\'' +
-                ", email='" + email + '\'' +
-                ", cz_isco='" + cz_isco + '\'' +
-                ", position='" + position + '\'' +
-                ", numberOfVacancy='" + numberOfVacancy + '\'' +
-                ", phase=" + phase +
-                ", status=" + status +
-                ", receivedOrder='" + receivedOrder + '\'' +
-                ", schengen='" + schengen + '\'' +
-                ", workingAgreement='" + workingAgreement + '\'' +
-                ", workingAgree='" + workingAgree + '\'' +
-                ", confirmationOfLivingPlace='" + confirmationOfLivingPlace + '\'' +
-                ", beginWorkingContract='" + beginWorkingContract + '\'' +
-                ", endWorkingContract='" + endWorkingContract + '\'' +
-                ", schengenTrialPeriod='" + schengenTrialPeriod + '\'' +
-                ", realStartingOfSchengen='" + realStartingOfSchengen + '\'' +
-                ", multiVisa='" + multiVisa + '\'' +
-                ", ECBegin='" + ECBegin + '\'' +
-                ", ECEnd='" + ECEnd + '\'' +
-                ", ECTrialPeriod='" + ECTrialPeriod + '\'' +
-                ", expectedStartingAtCompany='" + expectedStartingAtCompany + '\'' +
-                ", duration='" + duration + '\'' +
-                ", presentedToCompany='" + presentedToCompany + '\'' +
-                ", ministryOfForeignAffairs='" + ministryOfForeignAffairs + '\'' +
-                ", interviewAtConsulate='" + interviewAtConsulate + '\'' +
-                ", pickingUpTheVISA='" + pickingUpTheVISA + '\'' +
-                ", registrationAtLocalOffice='" + registrationAtLocalOffice + '\'' +
-                ", startingToWork='" + startingToWork + '\'' +
-                ", receivingEmploymentCard='" + receivingEmploymentCard + '\'' +
-                ", comments='" + comments + '\'' +
-                '}';
     }
 }

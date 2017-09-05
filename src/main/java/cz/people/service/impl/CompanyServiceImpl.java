@@ -46,6 +46,11 @@ public class CompanyServiceImpl implements CompanyService {
         dao.delete(id);
     }
 
+    @Override
+    public Company findCompanyByPersonAndProjects(int id) {
+        return dao.findCompanyByPersonAndProjects(id);
+    }
+
 //    @Override
 //    public Company findCompanyWithEmployees() {
 //        return dao.findCompanyWithEmployees();
