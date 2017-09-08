@@ -72,7 +72,7 @@ public class Employee {
     private Project project;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Group group;
+    private GroupWithEmployees groupWithEmployees;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
     private List<Education> educations = new ArrayList<>();
@@ -428,12 +428,12 @@ public class Employee {
         this.project = project;
     }
 
-    public Group getGroup() {
-        return group;
+    public GroupWithEmployees getGroupWithEmployees() {
+        return groupWithEmployees;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupWithEmployees(GroupWithEmployees groupWithEmployees) {
+        this.groupWithEmployees = groupWithEmployees;
     }
 
     public List<Education> getEducations() {
@@ -451,4 +451,6 @@ public class Employee {
     public void setLanguages(List<Language> languages) {
         this.languages = languages;
     }
+
+
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public interface CompanyDAO extends JpaRepository<Company, Integer> {
     //    @Query("from Company e join fetch e.employees")
 //    Company findCompanyWithEmployees();
-    @Query("from Company c   join fetch c.persons  join  c.projects where c.id=:id")
-    Company findCompanyByPersonAndProjects(@Param("id") int id);
+    @Query("from Company c  join fetch c.persons  where c.id=:id")
+    Company findCompanyByPersons(@Param("id") int id);
 
 }

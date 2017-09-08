@@ -18,6 +18,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void save(Company company) {
+        System.out.println("done");
         dao.save(company);
     }
 
@@ -47,8 +48,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company findCompanyByPersonAndProjects(int id) {
-        return dao.findCompanyByPersonAndProjects(id);
+    public Company findCompanyByPersons(int id) {
+        return dao.findCompanyByPersons(id);
     }
 
 //    @Override

@@ -39,4 +39,9 @@ public class ContactPersonServiceImpl implements ContactPersonService {
     public void delete(int id) {
         personDAO.delete(id);
     }
+
+    @Override
+    public List<ContactPerson> findAllPersonsFromCompany(int id) {
+        return personDAO.findAllPersonsFromCompany(id);
+    }
 }

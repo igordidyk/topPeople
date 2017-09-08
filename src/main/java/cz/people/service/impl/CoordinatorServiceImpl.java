@@ -49,10 +49,10 @@ public class CoordinatorServiceImpl implements CoordinatorService,UserDetailsSer
         dao.delete(id);
     }
 
-    @Override
-    public Coordinator finCoordinatorWithEmploees() {
-        return dao.finCoordinatorWithEmploees();
-    }
+//    @Override
+//    public Coordinator finCoordinatorWithEmploees() {
+//        return dao.finCoordinatorWithEmploees();
+//    }
 
     @Override
     public Coordinator findByName(@Param("username") String name) {

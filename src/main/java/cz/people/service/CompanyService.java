@@ -18,6 +18,6 @@ public interface CompanyService {
 
     void delete(int id);
 
-    Company findCompanyByPersonAndProjects(int id);
+    Company findCompanyByPersons(int id);
 
 }

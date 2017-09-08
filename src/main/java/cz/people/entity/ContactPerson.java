@@ -14,7 +14,7 @@ public class ContactPerson {
     private String email;
     private String telephone;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Company company;
 
 

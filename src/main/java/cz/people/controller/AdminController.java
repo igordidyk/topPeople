@@ -4,6 +4,7 @@ import cz.people.entity.Company;
 import cz.people.entity.ContactPerson;
 import cz.people.entity.Coordinator;
 import cz.people.service.CompanyService;
+import cz.people.service.ContactPersonService;
 import cz.people.service.CoordinatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,19 +21,14 @@ public class AdminController {
     private CoordinatorService service;
     @Autowired
     private CompanyService companyService;
+    @Autowired
+    private ContactPersonService personService;
 
 
     @GetMapping("/coordinators")
     public String coordinators(Model model) {
         model.addAttribute("coordinators", service.findAll());
         return "coordinatorsPage";
-    }
-
-    @GetMapping("/coordinators/remove-{id}")
-    public String delete(@PathVariable("id") Integer id) {
-        Coordinator coordinator = service.findOne(id);
-        service.delete(coordinator);
-        return "redirect:/admin/coordinators";
     }
 
 
@@ -55,6 +51,13 @@ public class AdminController {
         return "redirect:/admin/coordinators";
     }
 
+    @GetMapping("/coordinators/remove-{id}")
+    public String delete(@PathVariable("id") Integer id) {
+        Coordinator coordinator = service.findOne(id);
+        service.delete(coordinator);
+        return "redirect:/admin/coordinators";
+    }
+
     @GetMapping("/company")
     public String company(Model model) {
         model.addAttribute("companies", companyService.findAll());
@@ -71,15 +74,11 @@ public class AdminController {
 
         Company company = new Company(nameCompany, IC, contactAddress, telephone, CZ_NACE, email);
         companyService.save(company);
-
-
         return "redirect:/admin/company";
     }
-
     @GetMapping("/company/remove-{id}")
     public String deleteCompany(@PathVariable("id") Integer id) {
-        Company company = companyService.findOne(id);
-        companyService.delete(company);
+        companyService.delete(id);
         return "redirect:/admin/company";
     }
 
@@ -88,6 +87,7 @@ public class AdminController {
         model.addAttribute("company", companyService.findOne(id));
         return "editCompany";
     }
+
     @GetMapping("/company/createProject-{id}")
     public String createProject(@PathVariable("id") Integer id, Model model) {
 //        model.addAttribute("company", companyService.findOne(id));
@@ -95,44 +95,71 @@ public class AdminController {
         return "companyProjects";
     }
 
-    @GetMapping("/company/addContactPersonToCompany-{id}")
+    @GetMapping("/company/contactPersonFromCompany-{id}")
     public String addContactPersonToCompany(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("company", companyService.findCompanyByPersonAndProjects(id));
+        model.addAttribute("company", companyService.findCompanyByPersons(id));
+//        model.addAttribute("persons", personService.findAllPersonsFromCompany(id));
 
         return "companyContactPersons";
     }
-    @PostMapping("/company/addContactPerson")
-        public String addContactPerson(Model model,
-                                       @RequestParam("idCompany") int idCompany,
-                                       @RequestParam("firstName") String firstName,
-                                       @RequestParam("lastName") String lastName,
-                                       @RequestParam("position") String position,
-                                       @RequestParam("email") String email,
-                                       @RequestParam("telephone") String telephone) {
-        Company company = companyService.findOne(idCompany);
-        List<ContactPerson> persons = new ArrayList<>();
-        for (ContactPerson person : persons) {
-            ContactPerson contactPerson = new ContactPerson(firstName, lastName, position, email, telephone);
-            if (person.getFirstName().equals(contactPerson.getFirstName()) || person.getLastName().equals(contactPerson.getLastName()) || person.getEmail().equals(contactPerson.getEmail())) {
-                model.addAttribute("key", "This  contact person is olready exists");
-            }
-            persons.add(contactPerson);
-        }
-        company.setPersons(persons);
-        companyService.save(company);
-        return "company/addContactPersonPage";
-        }
-
-
-
-//    company/update
 
     @PostMapping("/company/save")
     public String updateCompany(@RequestParam("nameCompany") String nameCompany,
+                                @RequestParam("IC") String IC,
+                                @RequestParam("contactAddress") String contactAddress,
+                                @RequestParam("telephone") String telephone,
+                                @RequestParam("email") String email,
+                                @RequestParam("CZ_NACE") String CZ_NACE,
                                 @RequestParam("company") int idCompany) {
         Company company = companyService.findOne(idCompany);
+        company.setNameCompany(nameCompany);
+        company.setIC(IC);
+        company.setContactAddress(contactAddress);
+        company.setTelephone(telephone);
+        company.setEmail(email);
+        company.setCZ_NACE(CZ_NACE);
         System.out.println(company);
         companyService.save(company);
+        return "redirect:/admin/company";
+    }
+//
+//   <input type="text" name="IC" placeholder="IC">
+//    <input type="text" name="contactAddress" placeholder="Contact Address">
+//    <input type="text" name="telephone" placeholder="telephone">
+//    <input type="text" name="email" placeholder="email">
+//    <input type="text" name="CZ_NACE" placeholder="CZ_NACE">
+//
+
+    @PostMapping("/company/addContactPerson")
+    public String addContactPerson(Model model,
+                                   @RequestParam("idCompany") int idCompany,
+                                   @RequestParam("firstName") String firstName,
+                                   @RequestParam("lastName") String lastName,
+                                   @RequestParam("position") String position,
+                                   @RequestParam("email") String email,
+                                   @RequestParam("telephone") String telephone) {
+
+        Company company = companyService.findOne(idCompany);
+        ContactPerson contactPerson = new ContactPerson(firstName, lastName, position, email, telephone, company);
+        System.out.println(contactPerson);
+
+        List<ContactPerson> persons = personService.findAll();
+        for (ContactPerson person : persons) {
+            if (person.getFirstName().equals(contactPerson.getFirstName()) && person.getLastName().equals(contactPerson.getLastName()) && person.getEmail().equals(contactPerson.getEmail())) {
+                model.addAttribute("key", "This  contact person is already exists");
+            } else {
+                personService.save(contactPerson);
+            }
+        }
+        return "/admin/company";
+//
+//        return "companyContactPersons";
+    }
+
+///company/remove-${person.id}"
+    @GetMapping("/company/remove-{company.persons.id}")
+    public String deletePerson(@PathVariable("id") Integer id) {
+        personService.delete(id);
         return "redirect:/admin/company";
     }
 

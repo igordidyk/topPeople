@@ -18,17 +18,10 @@ public class Company {
     private String telephone;
     private String CZ_NACE;
     private String email;
-    //    private String HRManager;
-//    private String KKOV;
-
-//    private String contactPerson;
-//    private String direstor;
 
 
-//    private int numberOfCanditates;
 
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "company")
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "company")
     private List<ContactPerson> persons = new ArrayList<>();
 
 

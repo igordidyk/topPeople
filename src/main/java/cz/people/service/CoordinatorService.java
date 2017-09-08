@@ -17,7 +17,7 @@ public interface CoordinatorService {
     void delete(int id);
 
 
-    Coordinator finCoordinatorWithEmploees();
+//    Coordinator finCoordinatorWithEmploees();
 
     Coordinator findByName(String name);
 }
