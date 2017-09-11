@@ -5,6 +5,7 @@ import cz.people.service.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -17,6 +18,8 @@ import javax.transaction.Transactional;
 public class MailSenderServiceImpl implements MailSenderService {
     @Autowired
     private JavaMailSender javaMailSender;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
     @Override
     public void send(Coordinator coordinator)  {
@@ -24,9 +27,11 @@ public class MailSenderServiceImpl implements MailSenderService {
         MimeMessageHelper helper = new MimeMessageHelper(message);
 
         try {
-            helper.setFrom(new InternetAddress("ihordidyk95@gmail.com"));//костиль для вінди
+            helper.setFrom(new InternetAddress(""));//костиль для вінди
             helper.setTo(coordinator.getEmail());
-            helper.setText("Welcome " + coordinator.getUsername() + "to the site",true);
+            helper.setText("Congratulations! Your registration completed successfully.\n" +
+                    "Your login " +coordinator.getUsername()+
+                    "pass " + coordinator.getPassword(),true);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
