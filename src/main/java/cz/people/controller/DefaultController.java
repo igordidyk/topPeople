@@ -32,7 +32,8 @@ public class DefaultController {
     }
 
     @GetMapping("/coordinator")
-    public String coordinator() {
+    public String coordinator(Model model,Principal principal) {
+        model.addAttribute("coordinatorName", principal.getName());
 
         return "accountCoordinator";
     }

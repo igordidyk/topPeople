@@ -1,10 +1,12 @@
 package cz.people.controller;
 
 import cz.people.entity.Address;
+import cz.people.entity.Coordinator;
 import cz.people.entity.Employee;
 import cz.people.service.CoordinatorService;
 import cz.people.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +23,12 @@ public class CoordinatorController {
     private EmployeeService employeeService;
     @Autowired
     private CoordinatorService coordinatorService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/employee")
-    public String addCoordinator(Model model,Principal principal) {
-        model.addAttribute("key",principal.getName());
+    public String addEmployee(Model model, Principal principal) {
+        model.addAttribute("key", principal.getName());
 //        model.addAttribute("employees", employeeService.findEmployeesWithEducationAndLang());
         System.out.println(employeeService.findAll());
         return "employeePage";
@@ -41,7 +45,7 @@ public class CoordinatorController {
                        @RequestParam("region") String region,
                        @RequestParam("city") String city,
                        @RequestParam("postIndex") String postIndex,
-                       @RequestParam("street") String street ,
+                       @RequestParam("street") String street,
                        @RequestParam("numberOfHouse") String numberOfHouse,
                        @RequestParam("passportNomer") String passportNomer,
                        @RequestParam("passportValidUntil") String passportValidUntil,
@@ -147,67 +151,67 @@ public class CoordinatorController {
     }
 
     @GetMapping("/employee/remove-{id}")
-    public String deleteEmployee(@PathVariable("id") Integer id){
+    public String deleteEmployee(@PathVariable("id") Integer id) {
         employeeService.delete(id);
 //        employeeService.findOne(id)
         return "redirect:/coordinator/employee";
     }
 
     @GetMapping("/employee/edit-{id}")
-    public String editEmployee(@PathVariable("id") Integer id,Model model){
+    public String editEmployee(@PathVariable("id") Integer id, Model model) {
 //        model.addAttribute("employee",employeeService.findOneEmployeeWithEducationAndLang(id));
         return "editEmployee";
     }
 
     @PostMapping("/employee/update")
-        public String updateEmployee(@RequestParam("name") String name,
-                                     @RequestParam("surname") String surname,
-                                     @RequestParam("gender") String gender,
-                                     @RequestParam("nationality") String nationality,
-                                     @RequestParam("born") String born,
-                                     @RequestParam("birthPlace") String birthPlace,
-                                     @RequestParam("country") String country,
-                                     @RequestParam("region") String region,
-                                     @RequestParam("city") String city,
-                                     @RequestParam("postIndex") String postIndex,
-                                     @RequestParam("street") String street ,
-                                     @RequestParam("numberOfHouse") String numberOfHouse,
-                                     @RequestParam("passportNomer") String passportNomer,
-                                     @RequestParam("passportValidUntil") String passportValidUntil,
-                                     @RequestParam("issuedByAuthority") String issuedByAuthority,
-                                     @RequestParam("telephone") String telephone,
-                                     @RequestParam("email") String email,
-                                     @RequestParam("education") String education,
-                                     @RequestParam("language") String language,
-                                     @RequestParam("cz_isco") String cz_isco,
-                                     @RequestParam("position") String position,
-                                     @RequestParam("numberOfVacancy") String numberOfVacancy,
-                                     @RequestParam("phase") int phase,
-                                     @RequestParam("status") int status,
-                                     @RequestParam("receivedOrder") String receivedOrder,
-                                     @RequestParam("schengen") String schengen,
-                                     @RequestParam("workingAgreement") String workingAgreement,
-                                     @RequestParam("workingAgree") String workingAgree,
-                                     @RequestParam("confirmationOfLivingPlace") String confirmationOfLivingPlace,
-                                     @RequestParam("beginWorkingContract") String beginWorkingContract,
-                                     @RequestParam("endWorkingContract") String endWorkingContract,
-                                     @RequestParam("schengenTrialPeriod") String schengenTrialPeriod,
-                                     @RequestParam("realStartingOfSchengen") String realStartingOfSchengen,
-                                     @RequestParam("multiVisa") String multiVisa,
-                                     @RequestParam("ECBegin") String ECBegin,
-                                     @RequestParam("ECEnd") String ECEnd,
-                                     @RequestParam("ECTrialPeriod") String ECTrialPeriod,
-                                     @RequestParam("expectedStartingAtCompany") String expectedStartingAtCompany,
-                                     @RequestParam("duration") String duration,
-                                     @RequestParam("presentedToCompany") String presentedToCompany,
-                                     @RequestParam("ministryOfForeignAffairs") String ministryOfForeignAffairs,
-                                     @RequestParam("interviewAtConsulate") String interviewAtConsulate,
-                                     @RequestParam("pickingUpTheVISA") String pickingUpTheVISA,
-                                     @RequestParam("registrationAtLocalOffice") String registrationAtLocalOffice,
-                                     @RequestParam("startingToWork") String startingToWork,
-                                     @RequestParam("receivingEmploymentCard") String receivingEmploymentCard,
-                                     @RequestParam("comments") String comments,
-                                     @RequestParam("employee") int idEmployee) {
+    public String updateEmployee(@RequestParam("name") String name,
+                                 @RequestParam("surname") String surname,
+                                 @RequestParam("gender") String gender,
+                                 @RequestParam("nationality") String nationality,
+                                 @RequestParam("born") String born,
+                                 @RequestParam("birthPlace") String birthPlace,
+                                 @RequestParam("country") String country,
+                                 @RequestParam("region") String region,
+                                 @RequestParam("city") String city,
+                                 @RequestParam("postIndex") String postIndex,
+                                 @RequestParam("street") String street,
+                                 @RequestParam("numberOfHouse") String numberOfHouse,
+                                 @RequestParam("passportNomer") String passportNomer,
+                                 @RequestParam("passportValidUntil") String passportValidUntil,
+                                 @RequestParam("issuedByAuthority") String issuedByAuthority,
+                                 @RequestParam("telephone") String telephone,
+                                 @RequestParam("email") String email,
+                                 @RequestParam("education") String education,
+                                 @RequestParam("language") String language,
+                                 @RequestParam("cz_isco") String cz_isco,
+                                 @RequestParam("position") String position,
+                                 @RequestParam("numberOfVacancy") String numberOfVacancy,
+                                 @RequestParam("phase") int phase,
+                                 @RequestParam("status") int status,
+                                 @RequestParam("receivedOrder") String receivedOrder,
+                                 @RequestParam("schengen") String schengen,
+                                 @RequestParam("workingAgreement") String workingAgreement,
+                                 @RequestParam("workingAgree") String workingAgree,
+                                 @RequestParam("confirmationOfLivingPlace") String confirmationOfLivingPlace,
+                                 @RequestParam("beginWorkingContract") String beginWorkingContract,
+                                 @RequestParam("endWorkingContract") String endWorkingContract,
+                                 @RequestParam("schengenTrialPeriod") String schengenTrialPeriod,
+                                 @RequestParam("realStartingOfSchengen") String realStartingOfSchengen,
+                                 @RequestParam("multiVisa") String multiVisa,
+                                 @RequestParam("ECBegin") String ECBegin,
+                                 @RequestParam("ECEnd") String ECEnd,
+                                 @RequestParam("ECTrialPeriod") String ECTrialPeriod,
+                                 @RequestParam("expectedStartingAtCompany") String expectedStartingAtCompany,
+                                 @RequestParam("duration") String duration,
+                                 @RequestParam("presentedToCompany") String presentedToCompany,
+                                 @RequestParam("ministryOfForeignAffairs") String ministryOfForeignAffairs,
+                                 @RequestParam("interviewAtConsulate") String interviewAtConsulate,
+                                 @RequestParam("pickingUpTheVISA") String pickingUpTheVISA,
+                                 @RequestParam("registrationAtLocalOffice") String registrationAtLocalOffice,
+                                 @RequestParam("startingToWork") String startingToWork,
+                                 @RequestParam("receivingEmploymentCard") String receivingEmploymentCard,
+                                 @RequestParam("comments") String comments,
+                                 @RequestParam("employee") int idEmployee) {
 
         Employee employee = employeeService.findOne(idEmployee);
 
@@ -272,8 +276,37 @@ public class CoordinatorController {
 //        employee.setCoordinator(coordinatorService.findByName(coordinator));
         employeeService.save(employee);
 //        return "admin";
-            return "redirect:/coordinator/employee";
-        }
+        return "redirect:/coordinator/employee";
+    }
 
+    @GetMapping("/myAccount")
+    public String myAccount(Model model, Principal principal) {
+        model.addAttribute("coordinatorName", principal.getName());
+        model.addAttribute("coordinator", coordinatorService.findByName(principal.getName()));
+        return "coordinatorDetails";
+    }
+
+    @PostMapping("/myAccount/editProfile")
+    public String coordinatorAccount(@RequestParam("firstName") String firstName,
+                                     @RequestParam("lastName") String lastName,
+                                     @RequestParam("email") String email,
+                                     @RequestParam("telephone") String telephone,
+                                     @RequestParam("username") String username,
+                                     @RequestParam("password") String password,
+                                     @RequestParam("id") int id) {
+
+        Coordinator coordinator = coordinatorService.findOne(id);
+        System.out.println(coordinator);
+        coordinator.setFirstName(firstName);
+        coordinator.setLastName(lastName);
+        coordinator.setEmail(email);
+        coordinator.setTelephone(telephone);
+        coordinator.setUsername(username);
+        coordinator.setPassword(password);
+        System.out.println(coordinator);
+        coordinatorService.save(coordinator);
+        return "redirect:/coordinator/myAccount";
+//        return "coordinatorDetails";
+    }
 
 }
