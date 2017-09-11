@@ -48,7 +48,7 @@
             <td>${company.contactAddress}</td>
             <td>
                 <div style="list-style-type: none; text-decoration: none">
-                    <li><a href="/admin/company/remove-${company.id}">delete Company</a></li>
+
                     <li><a href="/admin/company/edit-${company.id}" >edit Company</a></li>
                     <li><a href="/admin/company/contactPersonFromCompany-${company.id}" >Contact Person</a></li>
                     <li><a href="/admin/company/createProject-${company.id}" >Create Project</a></li>

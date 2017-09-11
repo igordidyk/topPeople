@@ -76,11 +76,6 @@ public class AdminController {
         companyService.save(company);
         return "redirect:/admin/company";
     }
-    @GetMapping("/company/remove-{id}")
-    public String deleteCompany(@PathVariable("id") Integer id) {
-        companyService.delete(id);
-        return "redirect:/admin/company";
-    }
 
     @GetMapping("/company/edit-{id}")
     public String edit(@PathVariable("id") Integer id, Model model) {
@@ -122,13 +117,6 @@ public class AdminController {
         companyService.save(company);
         return "redirect:/admin/company";
     }
-//
-//   <input type="text" name="IC" placeholder="IC">
-//    <input type="text" name="contactAddress" placeholder="Contact Address">
-//    <input type="text" name="telephone" placeholder="telephone">
-//    <input type="text" name="email" placeholder="email">
-//    <input type="text" name="CZ_NACE" placeholder="CZ_NACE">
-//
 
     @PostMapping("/company/addContactPerson")
     public String addContactPerson(Model model,
@@ -152,14 +140,11 @@ public class AdminController {
             }
         }
         return "/admin/company";
-//
-//        return "companyContactPersons";
     }
 
-///company/remove-${person.id}"
-    @GetMapping("/company/remove-{company.persons.id}")
+    @GetMapping("/company/delete-{id}")
     public String deletePerson(@PathVariable("id") Integer id) {
-        personService.delete(id);
+       personService.delete(id);
         return "redirect:/admin/company";
     }
 

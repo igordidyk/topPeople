@@ -52,7 +52,7 @@
             <td>${person.email}</td>
             <td>${person.telephone}</td>
             <td>
-                <a href="/admin/company/remove-${person.id}">delete Person</a>
+                <a href="/admin/company/delete-${person.id}">delete Person</a>
                 <a href="/admin/company/edit-${person.id}" >edit Person</a>
             </td>
 
