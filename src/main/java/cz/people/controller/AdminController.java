@@ -6,7 +6,9 @@ import cz.people.entity.Coordinator;
 import cz.people.service.CompanyService;
 import cz.people.service.ContactPersonService;
 import cz.people.service.CoordinatorService;
+import cz.people.service.MailSenderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,6 +25,10 @@ public class AdminController {
     private CompanyService companyService;
     @Autowired
     private ContactPersonService personService;
+    @Autowired
+    private MailSenderService senderService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @GetMapping("/coordinators")
@@ -48,6 +54,12 @@ public class AdminController {
         coordinator.setUsername(username);
         coordinator.setPassword(password);
         service.save(coordinator);
+//        System.out.println(passwordEncoder.matches(coordinator.getPassword(), password));
+//        passwordEncoder.matches(coordinator.getPassword(), password);
+        String message = "Congratulations!" + System.lineSeparator() + "Your registration completed successfully."
+                + System.lineSeparator() + "Your login: " + username + ";" + System.lineSeparator() + "password: " + password+ ";";
+
+        senderService.send(coordinator, message,false);
         return "redirect:/admin/coordinators";
     }
 
@@ -144,7 +156,7 @@ public class AdminController {
 
     @GetMapping("/company/delete-{id}")
     public String deletePerson(@PathVariable("id") Integer id) {
-       personService.delete(id);
+        personService.delete(id);
         return "redirect:/admin/company";
     }
 
