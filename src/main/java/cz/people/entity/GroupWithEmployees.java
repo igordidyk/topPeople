@@ -15,6 +15,9 @@ public class GroupWithEmployees {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "groupWithEmployees")
     private List<Employee> employees = new ArrayList<>();
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Project project;
+
     public GroupWithEmployees() {
     }
 

@@ -68,8 +68,8 @@ public class Employee {
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     private Coordinator coordinator;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Project project;
+//    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private Project project;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private GroupWithEmployees groupWithEmployees;
@@ -420,13 +420,13 @@ public class Employee {
         this.coordinator = coordinator;
     }
 
-    public Project getProject() {
-        return project;
-    }
-
-    public void setProject(Project project) {
-        this.project = project;
-    }
+//    public Project getProject() {
+//        return project;
+//    }
+//
+//    public void setProject(Project project) {
+//        this.project = project;
+//    }
 
     public GroupWithEmployees getGroupWithEmployees() {
         return groupWithEmployees;
