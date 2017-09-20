@@ -19,7 +19,7 @@ public interface ContactPersonService {
 
     void delete(int id);
 
-    List<ContactPerson> findAllPersonsFromCompany( int id);
+//    List<ContactPerson> findAllPersonsFromCompany( int id);
 
 
 }

@@ -15,7 +15,7 @@
     <br/>
     ${key}
     <br/>
-    <input type="submit" value="add contact Person">
+    <input type="submit"  value="add contact Person">
 </form>
 
 

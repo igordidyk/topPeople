@@ -21,7 +21,7 @@ public class Company {
 
 
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "company")
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "company")
     private List<ContactPerson> persons = new ArrayList<>();
 
 

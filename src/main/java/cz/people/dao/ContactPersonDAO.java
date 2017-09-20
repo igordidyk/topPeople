@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ContactPersonDAO extends JpaRepository<ContactPerson,Integer> {
-    @Query("from Company c join c.persons where c.id=:id ")
-    List<ContactPerson> findAllPersonsFromCompany(@Param("id") int id);
+//    @Query("from Company c join c.persons where c.id=:id ")
+//    List<ContactPerson> findAllPersonsFromCompany(@Param("id") int id);
 }

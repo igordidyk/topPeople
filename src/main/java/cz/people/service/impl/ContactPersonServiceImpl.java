@@ -40,8 +40,8 @@ public class ContactPersonServiceImpl implements ContactPersonService {
         personDAO.delete(id);
     }
 
-    @Override
-    public List<ContactPerson> findAllPersonsFromCompany(int id) {
-        return personDAO.findAllPersonsFromCompany(id);
-    }
+//    @Override
+//    public List<ContactPerson> findAllPersonsFromCompany(int id) {
+//        return personDAO.findAllPersonsFromCompany(id);
+//    }
 }

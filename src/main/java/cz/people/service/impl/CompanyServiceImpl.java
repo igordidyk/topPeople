@@ -48,8 +48,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company findCompanyByPersons(int id) {
-        return dao.findCompanyByPersons(id);
+    public Company findCompanyWithPersons(int id) {
+        return dao.findCompanyWithPersons(id);
     }
 
 //    @Override

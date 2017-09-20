@@ -27,8 +27,8 @@ public class AdminController {
     private ContactPersonService personService;
     @Autowired
     private MailSenderService senderService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
 
     @GetMapping("/coordinators")
@@ -104,11 +104,11 @@ public class AdminController {
 
     @GetMapping("/company/contactPersonFromCompany-{id}")
     public String addContactPersonToCompany(@PathVariable("id") Integer id, Model model) {
-        model.addAttribute("company", companyService.findCompanyByPersons(id));
-//        model.addAttribute("persons", personService.findAllPersonsFromCompany(id));
-
+        model.addAttribute("company", companyService.findOne(id));
         return "companyContactPersons";
     }
+
+
 
     @PostMapping("/company/save")
     public String updateCompany(@RequestParam("nameCompany") String nameCompany,
@@ -140,7 +140,8 @@ public class AdminController {
                                    @RequestParam("telephone") String telephone) {
 
         Company company = companyService.findOne(idCompany);
-        ContactPerson contactPerson = new ContactPerson(firstName, lastName, position, email, telephone, company);
+        ContactPerson contactPerson = new ContactPerson(firstName, lastName, position, email, telephone);
+//        personService.save(contactPerson);
         System.out.println(contactPerson);
 
         List<ContactPerson> persons = personService.findAll();
@@ -148,10 +149,11 @@ public class AdminController {
             if (person.getFirstName().equals(contactPerson.getFirstName()) && person.getLastName().equals(contactPerson.getLastName()) && person.getEmail().equals(contactPerson.getEmail())) {
                 model.addAttribute("key", "This  contact person is already exists");
             } else {
+                contactPerson.setCompany(company);
                 personService.save(contactPerson);
             }
         }
-        return "/admin/company";
+        return "redirect:/admin/company/contactPersonFromCompany-"+idCompany;
     }
 
     @GetMapping("/company/delete-{id}")
